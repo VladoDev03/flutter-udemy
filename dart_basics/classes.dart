@@ -2,6 +2,8 @@ void main(List<String> args) {
   // Person me = Person('Vladimir', 20);
   Person me = Person(name: 'Vladimir', age: 20);
   print('${me.name} -> ${me.age}');
+  Person young = Person.young('Young');
+  print('${young.name} -> ${young.age}');
 }
 
 class Person {
@@ -24,4 +26,8 @@ class Person {
   // }
 
   Person({this.name, this.age}) {}
+
+  Person.young(this.name) {
+    age = 16;
+  }
 }

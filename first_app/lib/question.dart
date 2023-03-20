@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class Question extends StatelessWidget {
   final String questionText;
@@ -14,7 +12,7 @@ class Question extends StatelessWidget {
       margin: EdgeInsets.all(10.0),
       child: Text(
         questionText,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 28,
         ),
         textAlign: TextAlign.center,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import 'answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,14 +23,24 @@ class _MyAppState extends State<MyApp> {
       _questionIndex = _questionIndex + 1;
     });
 
-    print('Answer 1 chosen!');
+    // print('Answer 1 chosen!');
   }
 
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorite color?',
-      'What\'s your favorite animal?',
+      {
+        'questionText': 'What\'s your favorite color?',
+        'answers': ['Blue', 'Green', 'Red', 'Yellow']
+      },
+      {
+        'questionText': 'What\'s your favorite animal?',
+        'answers': ['Dog', 'Cat', 'Mouse']
+      },
+      {
+        'questionText': 'What\'s your favorite programming language?',
+        'answers': ['C#', 'JavaScript', 'Dart', 'Kotlin', 'C++']
+      },
     ];
 
     return MaterialApp(
@@ -39,21 +50,27 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            Question(questions[_questionIndex]),
-            ElevatedButton(
-              onPressed: _answerQuestion,
-              child: const Text('Answer 1'),
+            // ElevatedButton(
+            //   onPressed: _answerQuestion,
+            //   child: const Text('Answer 1'),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () => print("Answer 2 chosen!"),
+            //   child: const Text('Answer 2'),
+            // ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     print("Answer 3 chosen!");
+            //   },
+            //   child: const Text('Answer 3'),
+            // ),
+            Question(
+              questions[_questionIndex]['questionText'] as String,
             ),
-            ElevatedButton(
-              onPressed: () => print("Answer 2 chosen!"),
-              child: const Text('Answer 2'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                print("Answer 3 chosen!");
-              },
-              child: const Text('Answer 3'),
-            ),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList()
           ],
         ),
       ),
