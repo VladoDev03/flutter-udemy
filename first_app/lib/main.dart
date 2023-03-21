@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import 'answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,34 +17,59 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _questionIndex = 0;
+  int _totalScore = 0;
 
-  final questions = const [
+  final _questions = const [
     {
       'questionText': 'What\'s your favorite color?',
-      'answers': ['Blue', 'Green', 'Red', 'Yellow']
+      'answers': [
+        {'text': 'Blue', 'score': 10},
+        {'text': 'Green', 'score': 5},
+        {'text': 'Red', 'score': 7},
+        {'text': 'Yellow', 'score': 2}
+      ]
     },
     {
       'questionText': 'What\'s your favorite animal?',
-      'answers': ['Dog', 'Cat', 'Mouse']
+      'answers': [
+        {'text': 'Dog', 'score': 5},
+        {'text': 'Cat', 'score': 10},
+        {'text': 'Mouse', 'score': 1}
+      ]
     },
     {
       'questionText': 'What\'s your favorite programming language?',
-      'answers': ['C#', 'JavaScript', 'Dart', 'Kotlin', 'C++']
+      'answers': [
+        {'text': 'C#', 'score': 10},
+        {'text': 'JavaScript', 'score': 8},
+        {'text': 'Dart', 'score': 2},
+        {'text': 'Kotlin', 'score': 4},
+        {'text': 'C++', 'score': 6}
+      ]
     },
   ];
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
 
-    if (_questionIndex < questions.length) {
+    if (_questionIndex < _questions.length) {
       print('We have more questions!');
     } else {
       print('No more questions left!');
     }
 
     // print('Answer 1 chosen!');
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -54,35 +79,13 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('My First App'),
         ),
-        body: _questionIndex < questions.length
-            ? Column(
-                children: [
-                  // ElevatedButton(
-                  //   onPressed: _answerQuestion,
-                  //   child: const Text('Answer 1'),
-                  // ),
-                  // ElevatedButton(
-                  //   onPressed: () => print("Answer 2 chosen!"),
-                  //   child: const Text('Answer 2'),
-                  // ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     print("Answer 3 chosen!");
-                  //   },
-                  //   child: const Text('Answer 3'),
-                  // ),
-                  Question(
-                    questions[_questionIndex]['questionText'] as String,
-                  ),
-                  ...(questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
-                  }).toList()
-                ],
+        body: _questionIndex < _questions.length
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+                questions: _questions,
               )
-            : Center(
-                child: Text('You did it!'),
-              ),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
   }
