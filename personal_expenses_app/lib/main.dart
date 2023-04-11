@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal Expenses',
+      darkTheme: ThemeData(colorScheme: ColorScheme.fromSwatch()),
       theme: ThemeData(
-        primarySwatch: Colors.purple,
         colorScheme: ThemeData(primarySwatch: Colors.purple)
             .colorScheme
             .copyWith(secondary: Colors.amber),

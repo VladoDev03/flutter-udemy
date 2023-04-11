@@ -41,14 +41,15 @@ class TransactionList extends StatelessWidget {
                           vertical: 10, horizontal: 15),
                       decoration: BoxDecoration(
                           border: Border.all(
-                              color: Theme.of(context).primaryColor, width: 2)),
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 2)),
                       padding: const EdgeInsets.all(10),
                       child: Text(
                           '\$${transactions[index].amount.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
-                              color: Theme.of(context).primaryColor)),
+                              color: Theme.of(context).colorScheme.primary)),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
