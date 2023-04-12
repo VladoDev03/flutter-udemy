@@ -17,15 +17,17 @@ class MyApp extends StatelessWidget {
       title: 'Personal Expenses',
       darkTheme: ThemeData(colorScheme: ColorScheme.fromSwatch()),
       theme: ThemeData(
-        colorScheme: ThemeData(primarySwatch: Colors.purple)
-            .colorScheme
-            .copyWith(secondary: Colors.amber),
+        colorScheme:
+            ThemeData(primarySwatch: Colors.purple).colorScheme.copyWith(
+                  secondary: Colors.amber, /*error: Colors.red*/
+                ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
             titleMedium: const TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 20,
-                fontWeight: FontWeight.bold)),
+                fontWeight: FontWeight.bold),
+            labelLarge: const TextStyle(color: Colors.white)),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
@@ -79,15 +81,21 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final Transaction newTx = Transaction(
         title: title,
         amount: amount,
-        date: DateTime.now(),
+        date: chosenDate,
         id: DateTime.now().toString());
 
     setState(() {
       _userTransactions.add(newTx);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -113,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // double.infinity -> as much as it can take
             Chart(recentTransaction: _recentTransactions),
-            TransactionList(_userTransactions)
+            TransactionList(_userTransactions, _deleteTransaction)
           ],
         ),
       ),
